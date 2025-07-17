@@ -33,14 +33,20 @@ function render(variables = {}) {
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
             ${cover}
           <img src="${variables.avatarURL}" class="photo" />
-          <h1>Lucy Boilett</h1>
-          <h2>Web Developer</h2>
-          <h3>Miami, USA</h3>
-          <ul class="position-right">
-            <li><a href="https://twitter.com/4geeksacademy"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="https://github.com/4geeksacademy"><i class="fab fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/school/4geeksacademy"><i class="fab fa-linkedin"></i></a></li>
-            <li><a href="https://instagram.com/4geeksacademy"><i class="fab fa-instagram"></i></a></li>
+          <h1 class="picker">${variables.name ||
+            "First Name"} ${variables.lastName || "Last Name"}</h1>
+          <h2 class="picker">${variables.role || "Role"}</h2>
+          <h3 class="picker">${variables.city || "City"}</h3>
+          <h4 class="picker">${variables.country || "Country"}</h4>
+          <ul class="${variables.socialMediaPosition}">           
+           <li><a href="${variables.twitter ||
+             "#"}"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="${variables.github ||
+              "#"}"><i class="fab fa-github"></i></a></li>
+            <li><a href="${variables.linkedin ||
+              "#"}"><i class="fab fa-linkedin"></i></a></li>
+            <li><a href="${variables.instagram ||
+              "#"}"><i class="fab fa-instagram"></i></a></li>
           </ul>
         </div>
     `;
@@ -75,7 +81,8 @@ window.onload = function() {
   document.querySelectorAll(".picker").forEach(function(elm) {
     elm.addEventListener("change", function(e) {
       // <- add a listener to every input
-      const attribute = e.target.getAttribute("for"); // when any input changes, collect the value
+      const attribute = e.target.dataset.attr;
+      // when any input changes, collect the value
       let values = {};
       values[attribute] =
         this.value == "" || this.value == "null"
